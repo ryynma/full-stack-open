@@ -1,5 +1,6 @@
 /**
  * Full Stack open tehtävät 1.1-1.5
+ * React-komponenttien ja olioiden käyttö.
 */
 
 import React from 'react';
@@ -53,7 +54,5 @@ const App = () => {
         </div>
     )
 }
-
-/* <p>yhteensä {tehtavia1 + tehtavia2 + tehtavia3} tehtävää</p> */
 
 ReactDOM.render(<App />, document.getElementById('root'));
