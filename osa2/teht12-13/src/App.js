@@ -32,9 +32,13 @@ class App extends React.Component {
 
   /* Määrittää mitä näytetään, riippuen suodatuksen tuloksesta. */
   countriesToShow = () => {
+    const filter = this.state.filter.trim().toLowerCase()
+
     const filteredCountries = this.state.countries
-      .filter(country => country.name.toLowerCase()
-      .includes(this.state.filter.trim().toLowerCase()))
+      .filter(country => {
+        return country.name.toLowerCase().includes(filter)
+        || country.nativeName.toLowerCase().includes(filter)
+      })
 
     if (filteredCountries.length === 0) {
       return (<div>There are no matches, specify another filter</div>)
@@ -59,13 +63,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <form>
           Find countries: 
           <input
             value={this.state.filter}
             onChange={this.handleChangeFilter}
           />
-        </form>
         {this.countriesToShow()}
       </div>
     );
