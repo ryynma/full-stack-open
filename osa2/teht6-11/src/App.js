@@ -5,8 +5,8 @@ import AddPersonForm from './components/AddPersonForm';
 import axios from 'axios'
 
 class App extends React.Component {
-  constructor(prpos) {
-    super(prpos)
+  constructor() {
+    super()
     this.state = {
       persons: [],
       newName: '',
