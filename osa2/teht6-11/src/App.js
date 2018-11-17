@@ -2,21 +2,24 @@ import React from 'react';
 import Person from './components/Person';
 import Filter from './components/Filter';
 import AddPersonForm from './components/AddPersonForm';
+import axios from 'axios'
 
 class App extends React.Component {
   constructor(prpos) {
     super(prpos)
     this.state = {
-      persons: [
-        { name: 'Arto Hellas', number: '040-123456' },
-        { name: 'Martti Tienari', number: '040-123456' },
-        { name: 'Arto Järvinen', number: '040-123456' },
-        { name: 'Lea Kutvonen', number: '040-123456' }
-      ],
+      persons: [],
       newName: '',
       newNumber: '',
       filter: ''
     }
+  }
+
+  /* Haetaan data palvelimelta. */
+  componentDidMount() {
+    axios
+      .get('http://localhost:3001/persons')
+      .then((response) => this.setState({ persons: response.data }))
   }
 
   addPerson = (event) => {
