@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Eka testiblogi",
+  "author": "Bongo Blogaaja",
+  "url": "https://www.google.fi",
+  "likes": 0
+}
