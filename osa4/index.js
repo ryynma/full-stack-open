@@ -5,20 +5,36 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const blogsRouter = require('./controllers/blogs')
+const config = require('./utils/config')
 
-if ( process.env.NODE_ENV !== 'production' ) {
-  require('dotenv').config()
-}
-
+/* Sovellus */
 app.use(cors())
 app.use(bodyParser.json())
 
 app.use('/api/blogs', blogsRouter)
 
-const mongoUrl = process.env.MONGODB_URI
+/* Tietokantayhteys */
+const mongoUrl = config.mongoUrl
 mongoose.connect(mongoUrl, { useNewUrlParser: true })
+    .then( () => {
+        console.log('connected to database', mongoUrl)
+    })
+    .catch( error => {
+        console.log(error)
+    })
 
-const PORT = process.env.PORT || 3003
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+/* Palvelin */
+const server = http.createServer(app)
+const PORT = config.port
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
 })
+
+server.on('close', () => {
+    mongoose.connection.close()
+})
+
+module.exports = {
+    app,
+    server
+}

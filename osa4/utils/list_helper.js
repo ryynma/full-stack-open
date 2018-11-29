@@ -4,7 +4,7 @@ const dummy = (blogs) => {
 
 /**
  * Palauttaa kaikkien blogien yhteenlasketun tykkäysmäärän.
- * @param {*} blogs 
+ * @param {*} blogs
  */
 const totalLikes = (blogs) => {
     const reducer = (sum, next) => {
@@ -16,13 +16,13 @@ const totalLikes = (blogs) => {
 
 /**
  * Palauttaa (jonkun) blogin, jolla on eniten tykkäyksiä.
- * @param {*} blogs 
+ * @param {*} blogs
  */
 const favoriteBlog = (blogs) => {
     const reducer = (fav, next) => {
         return fav.likes > next.likes ? fav : next
     }
-    return blogs.length === 0 ? undefined : formatBlog(blogs.reduce(reducer, {likes: 0}))
+    return blogs.length === 0 ? undefined : formatBlog(blogs.reduce(reducer, { likes: 0 }))
 }
 
 const formatBlog = (blog) => {
@@ -35,7 +35,7 @@ const formatBlog = (blog) => {
 
 /**
  * Palauttaa kirjoittajan, jolla on eniten blogeja, sekä hänen blogiensa määrän.
- * @param {*} blogs 
+ * @param {*} blogs
  */
 const mostBlogs = (blogs) => {
     if (blogs.length === 0)
@@ -57,13 +57,13 @@ const mostBlogs = (blogs) => {
             mostBlogs = value
         }
     })
-    
-    return { author: mostAuthor, blogs: mostBlogs}
+
+    return { author: mostAuthor, blogs: mostBlogs }
 }
 
 /**
  * Palauttaa kirjoittajan, jonka blogeilla on eniten tykkäyksiä, sekä tykkäysten määrän.
- * @param {*} blogs 
+ * @param {*} blogs
  */
 const mostLikes = (blogs) => {
     if (blogs.length === 0)
