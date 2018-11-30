@@ -15,6 +15,19 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 /**
+ * Hakee tietokannasta ja palauttaa tietyn blogiartikkelin json-muodossa.
+ */
+blogsRouter.get('/:id', async (request, response) => {
+    try {
+        const blog = await Blog.findById(request.params.id)
+        response.json(blog)
+    } catch (exception) {
+        console.log(exception)
+        response.status(500).json({ error: 'something went wrong' })
+    }
+})
+
+/**
  * Tallettaa uuden blogiartikkelin tietokantaan.
  */
 blogsRouter.post('/', async (request, response) => {
@@ -34,6 +47,32 @@ blogsRouter.post('/', async (request, response) => {
         const savedBlog = await blog.save()
         response.status(201).json(savedBlog)
 
+    } catch (exception) {
+        console.log(exception)
+        response.status(500).json({ error: 'something went wrong' })
+    }
+})
+
+/**
+ * Poistaa tietokannasta tietyn blogiartikkelin.
+ */
+blogsRouter.delete('/:id', async (request, response) => {
+    try {
+        await Blog.findByIdAndDelete(request.params.id)
+        response.status(204).end()
+    } catch (exception) {
+        console.log(exception)
+        response.status(500).json({ error: 'something went wrong' })
+    }
+})
+
+/**
+ * Päivittää tietokannassa olevaa blogia. Jos annetulla id:llä ei löydy blogia, luo uuden.
+ */
+blogsRouter.put('/:id', async (request, response) => {
+    try {
+        await Blog.findByIdAndUpdate(request.params.id, request.body)
+        response.status(204).end()
     } catch (exception) {
         console.log(exception)
         response.status(500).json({ error: 'something went wrong' })
