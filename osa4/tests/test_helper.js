@@ -1,6 +1,8 @@
 /* Apufunktioita testitiedoston käyttöön */
 
 const Blog = require('../models/blog')
+const User = require('../models/user')
+const bcrypt = require('bcrypt')
 
 const initialBlogs = [
     {
@@ -52,6 +54,25 @@ const nonExistingId = async () => {
     return blog._id.toString()
 }
 
+const usersInDb = async () => {
+    const users = await User.find({})
+    return users.map(User.format)
+}
+
+const initialUser = async () => {
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash('salasala', saltRounds)
+
+    const user = new User({
+        username: 'ttestaaj',
+        name: 'Tessu Testaaja',
+        passwordHash,
+        adult: true
+    })
+
+    return user
+}
+
 module.exports = {
-    initialBlogs, formatBlog, nonExistingId, blogsInDb
+    initialBlogs, formatBlog, nonExistingId, blogsInDb, usersInDb, initialUser
 }

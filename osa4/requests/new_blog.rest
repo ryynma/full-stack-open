@@ -1,8 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI1YzAyMDU0ZmJiYWIzMzFkNDgyYjhkY2IiLCJpYXQiOjE1NDM2MzYzNDh9.cApmAHoA-kS50SCzYLCU-faBy6h9xHjXVyMvDoSaksQ
 
 {
-  "title": "Toka testiblogi",
+  "title": "Viides testiblogi",
   "author": "Bongo Blogaaja",
   "url": "https://www.google.fi",
   "likes": 0
