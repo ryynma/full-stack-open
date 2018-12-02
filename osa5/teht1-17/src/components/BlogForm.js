@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class BlogForm extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor({ clickFunction }) {
+        super({ clickFunction })
 
         this.state = {
             author: '',
@@ -73,6 +74,10 @@ class BlogForm extends React.Component {
         )
 
     }
+}
+
+BlogForm.PropTypes = {
+    clickFunction: PropTypes.func.isRequired
 }
 
 export default BlogForm

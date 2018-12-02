@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class TogglableBlog extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor({ blog, handleLike, handleDelete, currentUsername }) {
+    super({ blog, handleLike, handleDelete, currentUsername })
     this.state = {
       visible: false
     }
@@ -43,20 +44,20 @@ class TogglableBlog extends React.Component {
     const blogData = () => {
       return (
         <div>
-          <div><a href={blog.url}>{blog.url}</a></div>
-          <div>
+          <div className='url'><a href={blog.url}>{blog.url}</a></div>
+          <div className='likes'>
             {blog.likes} likes
           <button onClick={this.increaseLikes}>Like</button>
           </div>
-          <div>added by {creator}</div>
+          <div className='creator'>added by {creator}</div>
         </div>
       )
     }
 
     return (
       <div className='blog'>
-        <div onClick={this.toggleVisibility}>{clickableLabel}</div>
-        <div style={showWhenVisible}>
+        <div onClick={this.toggleVisibility} className='clickableTitle'>{clickableLabel}</div>
+        <div style={showWhenVisible} className='togglableContent'>
           {blogData()}
           {this.isDeletable() ?
             <button onClick={this.delete}>Delete</button>
@@ -65,6 +66,13 @@ class TogglableBlog extends React.Component {
       </div>
     )
   }
+}
+
+TogglableBlog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  currentUsername: PropTypes.string.isRequired
 }
 
 export default TogglableBlog
