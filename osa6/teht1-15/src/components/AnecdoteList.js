@@ -3,9 +3,15 @@ import { voting } from '../reducers/anecdoteReducer'
 import { notificationShowing, notificationErasing } from '../reducers/notificationReducer';
 import Filter from './Filter'
 import { connect } from 'react-redux'
+import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
   handleVote = (anecdote) => () => {
+    // päivitetään ääni palvelimelle
+    const response = anecdoteService.vote(anecdote.id)
+    console.log("palvelin vastasi:", response)
+
+    // päivitetään sovelluksen tilaa
     this.props.voting(anecdote.id)
     this.props.notificationShowing(`you voted  '${anecdote.content}'`)
     setTimeout(() => this.props.notificationErasing(), 5000)
