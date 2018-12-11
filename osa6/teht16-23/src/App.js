@@ -1,8 +1,29 @@
 import React from 'react'
 import {
   BrowserRouter as Router,
-  Route, Link
+  Route, Link, NavLink
 } from 'react-router-dom'
+
+const Menu = () => {
+  const menuStyle = {
+    padding: 5,
+    backgroundColor: '#FFAAAA',
+  }
+
+  const linkStyle= {
+    fontWeight: 'bold',
+    backgroundColor: '#FF7777',
+    padding: 5
+  }
+
+  return <div style={menuStyle}>
+    <NavLink to='/anecdotes' activeStyle={linkStyle}>
+      anecdotes
+    </NavLink>&nbsp;
+    <NavLink to='/create' activeStyle={linkStyle}>create new</NavLink>&nbsp;
+    <NavLink to='/about' activeStyle={linkStyle}>about</NavLink>&nbsp;
+  </div>
+}
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -10,9 +31,9 @@ const AnecdoteList = ({ anecdotes }) => (
     <ul>
       {anecdotes.map(anecdote =>
         <li key={anecdote.id} >
-        <Link to={`/anecdotes/${anecdote.id}`}>
-          {anecdote.content}
-        </Link>
+          <Link to={`/anecdotes/${anecdote.id}`}>
+            {anecdote.content}
+          </Link>
         </li>
       )}
     </ul>
@@ -120,7 +141,8 @@ class App extends React.Component {
           votes: 0,
           id: '2'
         }
-      ]
+      ],
+      notification: 'testinotifikaatio'
     }
   }
 
@@ -154,22 +176,31 @@ class App extends React.Component {
   }
 
   render() {
+    const notificationStyle = {
+      margin: 30,
+      padding: 10,
+      color: '#FF1111',
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#FF1111',
+      borderWidth: 2,
+      borderRadius: 30,
+      textAlign: 'center'
+    }
+
     return (
       <div>
         <h1>Software anecdotes</h1>
         <Router>
           <div>
-            <div>
-              <Link to='/anecdotes'>anecdotes</Link>&nbsp;
-              <Link to='/create'>create new</Link>&nbsp;
-              <Link to='/about'>about</Link>&nbsp;
-            </div>
-            <div>{this.state.notification}</div>
+            <Menu />
+            <div style={notificationStyle}>{this.state.notification}</div>
+
             <Route exact path='/anecdotes' render={() =>
               <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route path='/anecdotes/:id' render={({ match }) =>
               <Anecdote anecdote={this.anecdoteById(match.params.id)} />} />
-            <Route path='/create' render={({history}) =>
+            <Route path='/create' render={({ history }) =>
               <CreateNew history={history} addNew={this.addNew} />} />
             <Route path='/about' render={() => <About />} />
           </div>
