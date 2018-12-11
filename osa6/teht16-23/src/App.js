@@ -1,19 +1,22 @@
 import React from 'react'
 import {
-  BrowserRouter as Router,
-  Route, Link, NavLink
+  BrowserRouter as Router, Route, Link, NavLink
 } from 'react-router-dom'
+import {
+  Container, Table, Grid, Image
+} from 'semantic-ui-react'
 
 const Menu = () => {
   const menuStyle = {
     padding: 5,
-    backgroundColor: '#FFAAAA',
+    backgroundColor: '#CCCCCC'
   }
 
-  const linkStyle= {
+  const linkStyle = {
     fontWeight: 'bold',
     backgroundColor: '#FF7777',
-    padding: 5
+    padding: 5,
+    color: '#FFFFFF'
   }
 
   return <div style={menuStyle}>
@@ -28,15 +31,19 @@ const Menu = () => {
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote =>
-        <li key={anecdote.id} >
-          <Link to={`/anecdotes/${anecdote.id}`}>
-            {anecdote.content}
-          </Link>
-        </li>
-      )}
-    </ul>
+    <Table>
+      <Table.Body>
+        {anecdotes.map(anecdote =>
+          <Table.Row key={anecdote.id} >
+            <Table.Cell>
+              <Link to={`/anecdotes/${anecdote.id}`}>
+                {anecdote.content}
+              </Link>
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Table.Body>
+    </Table>
   </div>
 )
 
@@ -49,17 +56,22 @@ const Anecdote = ({ anecdote }) => {
 }
 
 const About = () => (
-  <div>
-    <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
+  <Grid>
+    <Grid.Column width={10}>
+      <h2>About anecdote app</h2>
+      <p>According to Wikipedia:</p>
 
-    <em>An anecdote is a brief, revealing account of an individual person or an incident.
-      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
-      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
+      <em>An anecdote is a brief, revealing account of an individual person or an incident.
+        Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
+        such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
       An anecdote is "a story with a point."</em>
 
-    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
-  </div>
+      <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+    </Grid.Column>
+    <Grid.Column floated='right' width={5}>
+      <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Abraham_Lempel.JPG/200px-Abraham_Lempel.JPG" />
+    </Grid.Column>
+  </Grid>
 )
 
 const Footer = () => (
@@ -98,7 +110,7 @@ class CreateNew extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h2>create a new anecdote</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
@@ -115,7 +127,7 @@ class CreateNew extends React.Component {
           </div>
           <button>create</button>
         </form>
-      </div>
+      </Container>
     )
 
   }
@@ -179,7 +191,6 @@ class App extends React.Component {
       margin: 30,
       padding: 10,
       color: '#FF1111',
-      borderWidth: 1,
       borderStyle: 'solid',
       borderColor: '#FF1111',
       borderWidth: 2,
@@ -193,7 +204,7 @@ class App extends React.Component {
         <Router>
           <div>
             <Menu />
-            {this.state.notification ? 
+            {this.state.notification ?
               <div style={notificationStyle}>{this.state.notification}</div>
               : <div></div>
             }
@@ -207,6 +218,7 @@ class App extends React.Component {
             <Route path='/about' render={() => <About />} />
           </div>
         </Router>
+        <br />
         <Footer />
       </div>
     );
