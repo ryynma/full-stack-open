@@ -13,16 +13,17 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export const notificationShowing = (message) => {
-  return {
-    type: 'SHOW_MESSAGE',
-    message
-  }
-}
-
-export const notificationErasing = () => {
-  return {
-    type: 'ERASE_MESSAGE'
+export const notify = (message, sec) => {
+  return async (dispatch) => {
+    // näytetään viesti
+    dispatch({
+      type: 'SHOW_MESSAGE',
+      message
+    })
+    // tyhjennetään viesti
+    setTimeout(() => dispatch({
+      type: 'ERASE_MESSAGE'
+    }), sec * 1000)
   }
 }
 

@@ -1,21 +1,16 @@
 import React from 'react'
-import { anecdoteCreation } from '../reducers/anecdoteReducer'
-import { notificationShowing, notificationErasing } from '../reducers/notificationReducer';
+import { createNew } from '../reducers/anecdoteReducer'
+import { notify } from '../reducers/notificationReducer';
 import { connect } from 'react-redux'
-import anecdoteService from '../services/anecdotes'
 
 class AnecdoteForm extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault()
+
     const inputField = e.target.anecdote
+    this.props.createNew(inputField.value)
 
-    // talletetaan palvelimelle
-    const savedAnecdote = await anecdoteService.createNew(inputField.value)
-
-    // päivitetään sovelluksen tilaa
-    this.props.anecdoteCreation(savedAnecdote)
-    this.props.notificationShowing(`you created a new anecdote '${inputField.value}'`)
-    setTimeout(() => this.props.notificationErasing(), 5000)
+    this.props.notify(`you created a new anecdote '${inputField.value}'`, 5)
 
     inputField.value = ''
   }
@@ -34,7 +29,7 @@ class AnecdoteForm extends React.Component {
 
 const ConnectedAnecdoteForm = connect(
   null,
-  { anecdoteCreation, notificationShowing, notificationErasing }
+  { createNew, notify }
 )(AnecdoteForm)
 
 export default ConnectedAnecdoteForm

@@ -21,6 +21,8 @@ const initialState = anecdotesAtStart.map(asObject)
 const getId = () => (100000 * Math.random()).toFixed(0)
 */
 
+import anecdoteService from '../services/anecdotes'
+
 const reducer = (state = [], action) => {
   switch (action.type) {
   case 'VOTE':
@@ -36,24 +38,35 @@ const reducer = (state = [], action) => {
   }
 }
 
-export const anecdoteCreation = (data) => {
-  return {
-    type: 'CREATE',
-    data
+export const createNew = (content) => {
+  return async (dispatch) => {
+    // talletetaan palvelimelle
+    const savedAnecdote = await anecdoteService.createNew(content)
+    // päivitetään sovelluksen tilaa
+    dispatch({
+      type: 'CREATE',
+      data: savedAnecdote
+    })
   }
 }
 
-export const voting = (id) => {
-  return {
-    type: 'VOTE',
-    id
+export const vote = (id) => {
+  return async (dispatch) => {
+    anecdoteService.vote(id)
+    dispatch ({
+      type: 'VOTE',
+      id
+    })
   }
 }
 
-export const anecdoteInitialization = (data) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    data
+export const initializeAnecdotes = () => {
+  return async (dispatch) => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT_ANECDOTES',
+      data: anecdotes
+    })
   }
 }
 

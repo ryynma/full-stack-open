@@ -1,20 +1,17 @@
 import React from 'react'
-import { voting } from '../reducers/anecdoteReducer'
-import { notificationShowing, notificationErasing } from '../reducers/notificationReducer';
+import { vote } from '../reducers/anecdoteReducer'
+import { notify } from '../reducers/notificationReducer';
 import Filter from './Filter'
 import { connect } from 'react-redux'
-import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
   handleVote = (anecdote) => () => {
-    // päivitetään ääni palvelimelle
-    const response = anecdoteService.vote(anecdote.id)
-    console.log("palvelin vastasi:", response)
-
-    // päivitetään sovelluksen tilaa
-    this.props.voting(anecdote.id)
+    this.props.vote(anecdote.id)
+    this.props.notify(`you voted '${anecdote.content}'`, 5)
+    /*
     this.props.notificationShowing(`you voted  '${anecdote.content}'`)
     setTimeout(() => this.props.notificationErasing(), 5000)
+    */
   }
 
   render() {
@@ -51,7 +48,7 @@ const anecdotesToShow = (anecdotes, filter) => {
 
 const ConnectedAnecdoteList = connect(
   (state) => ({ anecdotesToShow: anecdotesToShow(state.anecdotes, state.filter) }),
-  { voting, notificationShowing, notificationErasing }
+  { vote, notify }
 )(AnecdoteList)
 
 export default ConnectedAnecdoteList
