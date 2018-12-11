@@ -141,8 +141,7 @@ class App extends React.Component {
           votes: 0,
           id: '2'
         }
-      ],
-      notification: 'testinotifikaatio'
+      ]
     }
   }
 
@@ -194,7 +193,10 @@ class App extends React.Component {
         <Router>
           <div>
             <Menu />
-            <div style={notificationStyle}>{this.state.notification}</div>
+            {this.state.notification ? 
+              <div style={notificationStyle}>{this.state.notification}</div>
+              : <div></div>
+            }
 
             <Route exact path='/anecdotes' render={() =>
               <AnecdoteList anecdotes={this.state.anecdotes} />} />
