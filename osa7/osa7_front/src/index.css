@@ -1,0 +1,39 @@
+.blog {
+    margin-top: 2em;
+}
+
+.error {
+    color: red;
+    font-size: 1.2em;
+    border-style: solid;
+    border-radius: 3px;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.message {
+    color: green;
+    font-size: 1.2em;
+    border-style: solid;
+    border-radius: 3px;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.blog {
+    display: block;
+}
+
+.menu {
+    border: 1px solid red;
+    margin: 2em 0;
+}
+
+.menu > * {
+    display: inline-block;
+    margin: 0.5em 2em;
+}
+
+.togglable {
+    margin-bottom: 2em;
+}
