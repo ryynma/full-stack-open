@@ -9,7 +9,8 @@ import {
 const Menu = () => {
   const menuStyle = {
     padding: 5,
-    backgroundColor: '#CCCCCC'
+    backgroundColor: '#DDDDDD',
+    marginBottom: 50,
   }
 
   const linkStyle = {
@@ -20,11 +21,11 @@ const Menu = () => {
   }
 
   return <div style={menuStyle}>
-    <NavLink to='/anecdotes' activeStyle={linkStyle}>
+    <NavLink to='/anecdotes' activeStyle={linkStyle} className="ui small button">
       anecdotes
     </NavLink>&nbsp;
-    <NavLink to='/create' activeStyle={linkStyle}>create new</NavLink>&nbsp;
-    <NavLink to='/about' activeStyle={linkStyle}>about</NavLink>&nbsp;
+    <NavLink to='/create' activeStyle={linkStyle} className="ui small button">create new</NavLink>&nbsp;
+    <NavLink to='/about' activeStyle={linkStyle} className="ui small button">about</NavLink>&nbsp;
   </div>
 }
 
@@ -61,7 +62,7 @@ const About = () => (
       <h2>About anecdote app</h2>
       <p>According to Wikipedia:</p>
 
-      <em>An anecdote is a brief, revealing account of an individual person or an incident.
+      <em className='message'>An anecdote is a brief, revealing account of an individual person or an incident.
         Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
         such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
       An anecdote is "a story with a point."</em>
@@ -69,7 +70,7 @@ const About = () => (
       <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
     </Grid.Column>
     <Grid.Column floated='right' width={5}>
-      <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Abraham_Lempel.JPG/200px-Abraham_Lempel.JPG" />
+      <Image className="ui medium circular image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Abraham_Lempel.JPG/200px-Abraham_Lempel.JPG" />
     </Grid.Column>
   </Grid>
 )
@@ -110,9 +111,9 @@ class CreateNew extends React.Component {
 
   render() {
     return (
-      <Container>
+      <div>
         <h2>create a new anecdote</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="ui form">
           <div>
             content
             <input name='content' value={this.state.content} onChange={this.handleChange} />
@@ -127,7 +128,7 @@ class CreateNew extends React.Component {
           </div>
           <button>create</button>
         </form>
-      </Container>
+      </div>
     )
 
   }
@@ -199,8 +200,10 @@ class App extends React.Component {
     }
 
     return (
-      <div>
-        <h1>Software anecdotes</h1>
+      <Container>
+        <div className="ui black inverted segment">
+          <h1 className='ui yellow inverted header'>Software anecdotes</h1>
+        </div>
         <Router>
           <div>
             <Menu />
@@ -209,18 +212,20 @@ class App extends React.Component {
               : <div></div>
             }
 
-            <Route exact path='/anecdotes' render={() =>
-              <AnecdoteList anecdotes={this.state.anecdotes} />} />
-            <Route path='/anecdotes/:id' render={({ match }) =>
-              <Anecdote anecdote={this.anecdoteById(match.params.id)} />} />
-            <Route path='/create' render={({ history }) =>
-              <CreateNew history={history} addNew={this.addNew} />} />
-            <Route path='/about' render={() => <About />} />
+            <div className="ui yellow raised segment">
+              <Route exact path='/anecdotes' render={() =>
+                <AnecdoteList anecdotes={this.state.anecdotes} />} />
+              <Route path='/anecdotes/:id' render={({ match }) =>
+                <Anecdote anecdote={this.anecdoteById(match.params.id)} />} />
+              <Route path='/create' render={({ history }) =>
+                <CreateNew history={history} addNew={this.addNew} />} />
+              <Route path='/about' render={() => <About />} />
+            </div>
           </div>
         </Router>
         <br />
         <Footer />
-      </div>
+      </Container>
     );
   }
 }
